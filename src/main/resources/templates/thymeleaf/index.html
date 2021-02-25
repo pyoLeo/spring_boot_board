@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 타임리프는 기본적으로 .html이고 xmlns 꼭 추가해야한다 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Title</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <!-- $는 변수를 가져오고 *를 통해서 선택적 변수를 가져온다 -->
+    <!-- *은 부모 태그에서 객체 지정하고 사용가능 -->
+    <p th:object="${board}"></p>
+    <p th:text="${board.bName}"></p>
+	<p th:text="*{bContent}"></p>	<!-- 얘는 안 나오고 -->
+	===========================================  
+	<div th:object="${board}">
+		<p th:text="${board.bName}"></p>
+		<p th:text="*{bContent}"></p>	<!-- 얘는 나온다 -->
+	</div>
+	===========================================  
+	<h1 th:text="#{content.id}"></h1>
+	<h1 th:text="#{content.name}"></h1>
+	===========================================  
+	<h1 th:text="${#temporals.format(localDateTime, 'yyyy-MM-dd HH:mm')}"></h1>
+</body>
+</html>
