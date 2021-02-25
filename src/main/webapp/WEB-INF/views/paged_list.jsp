@@ -37,25 +37,24 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 		</tr>
 	</table>
 	<div>
-	<ul>
+	<ul class="pagination justify-content-center">
 			<c:if test="${pageMaker.prev}">
-			<li>
+			<span>
 				<a href="paged${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-			</li>
+			</span>
 			</c:if>
 			
 			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-			<li>
 				<c:out value="${pageMaker.cri.pageNum == idx?'':''}" /> 
-				<a href="paged${pageMaker.makeQuery(idx)}">${idx}</a>
-			</li>
+				<span>
+					<a href="paged${pageMaker.makeQuery(idx)}">${idx}</a>
+				</span>
 			</c:forEach>
 			
 			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			<li>
-				<a href="paged${pageMaker.makeQuery(pageMaker.endPage +1) }"> »
-				</a>
-				</li>
+			<span>
+				<a href="paged${pageMaker.makeQuery(pageMaker.endPage +1) }">»</a>
+			</span>
 			</c:if><br>
 	</ul>
 	</div>
