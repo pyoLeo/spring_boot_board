@@ -1,20 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+	$(document).ready(function (){
+		$('.a-delete').click(function(event){
+			//prevendDefault()는 href로 연결해 주지 않고 단순히 click에 대한 처리를 하도록 해준다.
+			event.preventDefault();
+			console.log("ajax 호출전"); 
+			//해당 tr제거
+			var trObj =  $(this).parent().parent();
+			
+			$.ajax({
+			    type : "DELETE",
+			    url : $(this).attr("href"),
+/* 			    data:{"bId":"${content_view.bId}"}, */
+			    success: function (result) {       
+			        console.log(result); 
+					if(result == "SUCCESS"){
+			           //getList();
+				      $(trObj).remove();  
+				      	       
+					}					        
+			    },
+			    error: function (e) {
+			        console.log(e);
+			    }
+			})
+			 
+		});
+	});	
+</script>
 <body>
-
-<table class="table table-striped table-bordered table-hover">
-       
-      		<tr>
+	
+	<table width="500" cellpadding="0" cellspacing="0" border="1">
+		<tr>
 			<td>번호</td>
 			<td>이름</td>
 			<td>제목</td>
@@ -27,37 +52,27 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 			<td>${dto.bName}</td>
 			<td>
 				<c:forEach begin="1" end="${dto.bIndent}">-</c:forEach>
-				<a href="board/content_view?bId=${dto.bId}">${dto.bTitle}</a></td>
+				<a href="${pageContext.request.contextPath}/restful/content/${dto.bId}">${dto.bTitle}</a></td>
 			<td>${dto.bDate}</td>
 			<td>${dto.bHit}</td>
+			<td><a class="a-delete" data-bid='${dto.bId}' href="${pageContext.request.contextPath}/restful/${dto.bId}">삭제</a></td>
 		</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="5"> <a href="write_view">글작성</a> </td>
+			<td colspan="5"> <a href="${pageContext.request.contextPath}/restful/write">글작성</a> </td>
 		</tr>
 	</table>
-	<div>
-	<ul class="pagination justify-content-center">
-			<c:if test="${pageMaker.prev}">
-			<span>
-				<a href="board${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-			</span>
-			</c:if>
-			
-			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-				<c:out value="${pageMaker.cri.pageNum == idx?'':''}" /> 
-				<span>
-					<a href="board${pageMaker.makeQuery(idx)}">${idx}</a>
-				</span>
-			</c:forEach>
-			
-			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			<span>
-				<a href="board${pageMaker.makeQuery(pageMaker.endPage +1) }">»</a>
-			</span>
-			</c:if><br>
-	</ul>
-	</div>
-		
+	<c:if test="${pageMaker.prev}">
+       					  <a href="${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+     					 </c:if>
+
+     					 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+        				 <c:out value="${pageMaker.cri.pageNum == idx?'':''}" />
+        					 <a href="${pageMaker.makeQuery(idx)}">${idx}</a>
+   					   </c:forEach>
+      
+    				  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+    				     <a href="${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+  				    </c:if> <br>
 </body>
 </html>
