@@ -40,20 +40,20 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 	<ul class="pagination justify-content-center">
 			<c:if test="${pageMaker.prev}">
 			<span>
-				<a href="paged${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+				<a href="board${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
 			</span>
 			</c:if>
 			
 			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
 				<c:out value="${pageMaker.cri.pageNum == idx?'':''}" /> 
 				<span>
-					<a href="paged${pageMaker.makeQuery(idx)}">${idx}</a>
+					<a href="board${pageMaker.makeQuery(idx)}">${idx}</a>
 				</span>
 			</c:forEach>
 			
 			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 			<span>
-				<a href="paged${pageMaker.makeQuery(pageMaker.endPage +1) }">»</a>
+				<a href="board${pageMaker.makeQuery(pageMaker.endPage +1) }">»</a>
 			</span>
 			</c:if><br>
 	</ul>

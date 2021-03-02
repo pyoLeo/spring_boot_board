@@ -37,25 +37,29 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 		</tr>
 	</table>
 	<div>
-	<ul class="pagination justify-content-center">
-			<c:if test="${pageMaker.prev}">
-			<span>
-				<a href="paged${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-			</span>
-			</c:if>
-			
-			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-				<c:out value="${pageMaker.cri.pageNum == idx?'':''}" /> 
-				<span>
-					<a href="paged${pageMaker.makeQuery(idx)}">${idx}</a>
-				</span>
-			</c:forEach>
-			
-			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			<span>
-				<a href="paged${pageMaker.makeQuery(pageMaker.endPage +1) }">»</a>
-			</span>
-			</c:if><br>
+	<ul class ="pagination">
+	<!-- li태그의 클래스에 disabled를 넣으면 마우스를 위에 올렸을 때 클릭 금지 마크가 나오고 클릭도 되지 않는다.-->
+	<!-- disabled의 의미는 앞의 페이지가 존재하지 않다는 뜻이다. -->
+
+		<li class="disabled">
+		 <c:if test="${pageMaker.prev}"> <!--pageMaker.prev가 참이면 실행  -->
+	         <a href="${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+	      </c:if>
+		</li>
+		<li class= "active">
+		<!-- li태그의 클래스에 active를 넣으면 색이 반전되고 클릭도 되지 않는다. -->
+		<!-- active의 의미는 현재 페이지의 의미이다. -->
+
+	      <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+	         <c:out value="${pageMaker.cri.pageNum == idx?'':''}" />
+	         <a  href="${pageMaker.makeQuery(idx)}">${idx}</a> <!--시작부터 끝까지 번호출력  -->
+	      </c:forEach>
+	    </li>
+	    <li>
+	      <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	         <a href="${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+	      </c:if>
+	    </li>
 	</ul>
 	</div>
 		
